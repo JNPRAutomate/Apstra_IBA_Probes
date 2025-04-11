@@ -1,0 +1,55 @@
+{
+  "description": "",
+  "application_schema": {
+    "properties": {
+      "key": {
+        "properties": {
+          "Interface": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Interface"
+        ],
+        "type": "object"
+      },
+      "value": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "key",
+      "value"
+    ],
+    "type": "object"
+  },
+  "service_name": "Interface_Flap",
+  "storage_schema_path": "aos.sdk.telemetry.schemas.iba_integer_data",
+  "collectors": [
+    {
+      "platform": {
+        "os_type": "junos",
+        "os_version": "21.2r2",
+        "family": "junos,junos-ex,junos-qfx",
+        "model": ""
+      },
+      "source_type": "cli",
+      "cli": "show interfaces extensive",
+      "query": {
+        "accessors": {
+          "Interface": "/interface-information/physical-interface/name",
+          "value": "/interface-information/physical-interface/output-error-list/carrier-transitions"
+        },
+        "keys": {
+          "Interface": "Interface"
+        },
+        "values": {
+          "value": "int(value or 0)"
+        },
+        "filter": "keys['Interface'].startswith([\"et-\", \"xe-\", \"ge-\"])"
+      },
+      "relaxed_schema_validation": true
+    }
+  ],
+  "version": "version_0"
+}

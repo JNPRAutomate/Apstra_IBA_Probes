@@ -1,0 +1,67 @@
+{
+  "description": "",
+  "application_schema": {
+    "properties": {
+      "key": {
+        "properties": {
+          "Routing_Zone": {
+            "type": "string"
+          },
+          "Source": {
+            "type": "string"
+          },
+          "Target": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Routing_Zone",
+          "Source",
+          "Target"
+        ],
+        "type": "object"
+      },
+      "value": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "key",
+      "value"
+    ],
+    "type": "object"
+  },
+  "service_name": "RPM_ICMP_Overlay",
+  "storage_schema_path": "aos.sdk.telemetry.schemas.iba_integer_data",
+  "collectors": [
+    {
+      "platform": {
+        "os_type": "junos",
+        "os_version": "21.2r2",
+        "family": "junos,junos-ex,junos-qfx",
+        "model": ""
+      },
+      "source_type": "cli",
+      "cli": "show services rpm probe-results owner Overlay_Reachability",
+      "query": {
+        "accessors": {
+          "Routing_Zone": "/probe-results/probe-test-results/routing-instance-name",
+          "Source": "/probe-results/probe-test-results/source-address",
+          "Target": "/probe-results/probe-test-results/target-address",
+          "value": "/probe-results/probe-test-results/probe-test-current-results/probe-test-generic-results/probe-test-rtt/probe-summary-results/avg-delay"
+        },
+        "keys": {
+          "Routing_Zone": "Routing_Zone",
+          "Source": "Source",
+          "Target": "Target"
+        },
+        "values": {
+          "value": "int(int(re_match('\\s+(\\d+)', value)) / 1000 + 0.5)"
+        },
+        "filter": ""
+      },
+      "relaxed_schema_validation": true
+    }
+  ],
+  "version": "version_0"
+}

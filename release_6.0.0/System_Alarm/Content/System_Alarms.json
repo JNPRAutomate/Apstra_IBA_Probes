@@ -1,0 +1,55 @@
+{
+  "description": "",
+  "application_schema": {
+    "properties": {
+      "key": {
+        "properties": {
+          "Description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Description"
+        ],
+        "type": "object"
+      },
+      "value": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "key",
+      "value"
+    ],
+    "type": "object"
+  },
+  "service_name": "System_Alarms",
+  "storage_schema_path": "aos.sdk.telemetry.schemas.iba_integer_data",
+  "collectors": [
+    {
+      "platform": {
+        "os_type": "junos",
+        "os_version": "21.2r2",
+        "family": "junos,junos-ex,junos-qfx",
+        "model": ""
+      },
+      "source_type": "cli",
+      "cli": "show system alarms",
+      "query": {
+        "accessors": {
+          "Description": "/alarm-information/alarm-detail/alarm-description",
+          "alarm_class": "/alarm-information/alarm-detail/alarm-class"
+        },
+        "keys": {
+          "Description": "Description"
+        },
+        "values": {
+          "value": "int(1 if alarm_class == \"Major\" else 2 if alarm_class == \"Minor\" else None)"
+        },
+        "filter": ""
+      },
+      "relaxed_schema_validation": true
+    }
+  ],
+  "version": "version_0"
+}

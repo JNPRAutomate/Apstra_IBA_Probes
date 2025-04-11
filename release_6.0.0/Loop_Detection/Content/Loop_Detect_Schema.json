@@ -1,0 +1,67 @@
+{
+  "description": "Check the state of Lightweight Loop Detection on assigned interfaces",
+  "application_schema": {
+    "properties": {
+      "key": {
+        "properties": {
+          "LocalIF": {
+            "type": "string"
+          },
+          "RemoteHost": {
+            "type": "string"
+          },
+          "RemoteIF": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "LocalIF",
+          "RemoteHost",
+          "RemoteIF"
+        ],
+        "type": "object"
+      },
+      "value": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "key",
+      "value"
+    ],
+    "type": "object"
+  },
+  "service_name": "Loop_Detect_Schema",
+  "storage_schema_path": "aos.sdk.telemetry.schemas.iba_string_data",
+  "collectors": [
+    {
+      "platform": {
+        "os_type": "junos",
+        "os_version": "21.2r2",
+        "family": "junos,junos-ex,junos-qfx",
+        "model": ""
+      },
+      "source_type": "cli",
+      "cli": "show loop-detect enhanced interface",
+      "query": {
+        "accessors": {
+          "LocalIF": "/loop-detect-enhanced-interface-information/loop-detect-enhanced-interface-entry/ld-interface-name",
+          "RemoteHost": "/loop-detect-enhanced-interface-information/loop-detect-enhanced-interface-entry/ld-remote-host",
+          "RemoteIF": "/loop-detect-enhanced-interface-information/loop-detect-enhanced-interface-entry/ld-remote-interface",
+          "value": "/loop-detect-enhanced-interface-information/loop-detect-enhanced-interface-entry/ld-interface-state"
+        },
+        "keys": {
+          "LocalIF": "LocalIF",
+          "RemoteHost": "RemoteHost",
+          "RemoteIF": "RemoteIF"
+        },
+        "values": {
+          "value": "value"
+        },
+        "filter": ""
+      },
+      "relaxed_schema_validation": true
+    }
+  ],
+  "version": "version_0"
+}
